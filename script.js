@@ -61,6 +61,8 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
         const targetCell = board.getBoard()[row].find((_, colIndex) => colIndex === col);
 
+        const checkDraw = () => board.getBoard().every(item => item.every(cell => cell.getValue() !== ``));
+
         const checkWin = () => {
             const length = board.getBoard().length;
 
@@ -74,11 +76,13 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
         if (targetCell.getValue() === ``) {
             board.putToken(row, col, player.token);
-            if (!checkWin()) {
+            if (!checkWin() && !checkDraw()) {
                 console.log(`${player.playerName} put his token in row ${row} and col ${col}`);
                 switchPlayer();
                 board.printBoard();
                 console.log(`${getCurrentPlayer().playerName}'s turn`);
+            } else if (checkDraw()) {
+                console.log(`GAME OVER! It's DRAW`);
             } else {
                 console.log(`GAME OVER!`);
                 console.log(`${player.playerName} wins!`);
@@ -90,6 +94,3 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
     return { playRound, intro };
 }
-
-const game = GameController();
-game.intro();
