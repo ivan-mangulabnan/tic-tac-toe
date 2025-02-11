@@ -1,0 +1,44 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} 
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #f0f0f0;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.header{
+    height: 10rem;
+}
+
+.start {
+    display: block;
+    font-size: 2rem;
+    margin: 1rem auto;
+}
+
+.grid-generator {
+    background-color: #fff;
+    width: 20rem;
+    height: 20rem;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+}
+
+.status {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
