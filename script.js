@@ -51,6 +51,8 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
     const intro = () => {
         board.printBoard();
+        console.log(`Welcome Game Start!`);
+        console.log(`${getCurrentPlayer().playerName} will start`);
     }
 
     const playRound = (row, col) => {
@@ -59,15 +61,35 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
         const targetCell = board.getBoard()[row].find((_, colIndex) => colIndex === col);
 
+        const checkWin = () => {
+            const length = board.getBoard().length;
+
+            if (board.getBoard()[row].every(cell => cell.getValue() === player.token)) return true; // check row where the value was placed.
+            if (board.getBoard().every(item => item[col].getValue() === player.token)) return true; // check column where the value was placed.
+            if (row === col && board.getBoard().every((_, index) => board.getBoard()[index][index].getValue() === player.token)) return true; // check top-left to bottom-right 
+            if (row + col === length - 1 && board.getBoard().every((_, index) => board.getBoard()[index][length - 1 - index].getValue() === player.token)) return true // check top right to bottom left
+
+            return false;
+        }
+
         if (targetCell.getValue() === ``) {
             board.putToken(row, col, player.token);
-            console.log(`${player.playerName} put his token in row ${row} and col ${col}`);
-            switchPlayer();
-            board.printBoard();
+            if (!checkWin()) {
+                console.log(`${player.playerName} put his token in row ${row} and col ${col}`);
+                switchPlayer();
+                board.printBoard();
+                console.log(`${getCurrentPlayer().playerName}'s turn`);
+            } else {
+                console.log(`GAME OVER!`);
+                console.log(`${player.playerName} wins!`);
+            }
         } else {
             console.log(`Please choose another tile`);
         }
     }
 
-    return { playRound };
+    return { playRound, intro };
 }
+
+const game = GameController();
+game.intro();
