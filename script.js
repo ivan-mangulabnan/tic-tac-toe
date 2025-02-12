@@ -34,7 +34,34 @@ const GameBoard = (() => {
     return { getBoard, putToken, printBoard };
 })();
 
+const DomDisplay = () => {
+
+    const mainDiv = document.querySelector(`.main`);
+    const startButton = mainDiv.querySelector(`.start`);
+    const ticTacToeGrid = mainDiv.querySelector(`div:first-of-type`);
+    const announcementDiv = mainDiv.querySelector(`div:last-of-type`);
+
+    const displayBoard = (board) => {
+        ticTacToeGrid.classList.add(`grid-generator`);
+        startButton.addEventListener(`click`, () => {
+            ticTacToeGrid.innerHTML = "";
+            board.forEach((row,rowIndex) => {
+                row.forEach((_, colIndex) => {
+                    const cell = document.createElement(`button`);
+                    cell.setAttribute(`data-row`, rowIndex);
+                    cell.setAttribute(`data-col`, colIndex);
+                    ticTacToeGrid.appendChild(cell);
+                })
+            })
+        })
+    }
+
+    return { displayBoard };
+}
+
 function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
+
+    const dom = DomDisplay();
 
     const players = [
         { playerName: playerOne, token: `X` },
@@ -48,9 +75,7 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
     const switchPlayer = () => currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
 
     const intro = () => {
-        GameBoard.printBoard();
-        console.log(`Welcome Game Start!`);
-        console.log(`${getCurrentPlayer().playerName} will start`);
+        dom.displayBoard(GameBoard.getBoard());
     }
 
     const playRound = (row, col) => {
@@ -90,5 +115,9 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
         }
     }
 
-    return { playRound, intro };
+    intro();
+
+    return { playRound };
 }
+
+const game = GameController();
