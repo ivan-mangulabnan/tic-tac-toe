@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    background-color: #f0f0f0;
+    background-color: #fff;
     font-family: inherit;
     font-size: 100%;
 }
@@ -20,14 +20,13 @@ body {
     height: 10rem;
 }
 
-.start {
+.main > button {
     display: block;
     font-size: 2rem;
     margin: 1rem auto;
 }
 
 .grid-generator {
-    background-color: #fff;
     width: 20rem;
     height: 20rem;
     margin: auto;
@@ -35,10 +34,4 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
-}
-
-.status {
-    height: 100%;
-    width: 100%;
-    margin: auto;
 }
