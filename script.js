@@ -26,12 +26,7 @@ const GameBoard = (() => {
         board[row][col].addValue(playerToken);
     }
 
-    const printBoard = () => {
-        const displayingBoardValue = board.map(row => row.map(cell => cell.getValue()));
-        console.log(displayingBoardValue);
-    }
-
-    return { getBoard, putToken, printBoard };
+    return { getBoard, putToken };
 })();
 
 const DomDisplay = () => {
@@ -40,6 +35,7 @@ const DomDisplay = () => {
 
     const mainDiv = document.querySelector(`.main`);
     const startButton = mainDiv.querySelector(`.start`);
+    const resetButton = mainDiv.querySelector(`.reset`);
     const ticTacToeGrid = mainDiv.querySelector(`div:first-of-type`);
     const announcementDiv = mainDiv.querySelector(`.announcement`);
 
@@ -56,9 +52,10 @@ const DomDisplay = () => {
         })
     }
 
-    const announcement = () => {
+    const announcement = (result) => {
+        announcementDiv.innerHTML = "";
         const sayActivePlayer = document.createElement(`h2`);
-        sayActivePlayer.textContent = `${control.getCurrentPlayer().playerName} will start the game`;
+        sayActivePlayer.textContent = result;
         announcementDiv.appendChild(sayActivePlayer);
     }
 
@@ -74,15 +71,30 @@ const DomDisplay = () => {
     const events = () => {
         startButton.addEventListener(`click`, gameStart);
         ticTacToeGrid.addEventListener(`click`, gameRound);
+        resetButton.addEventListener(`click`, reset);
     }
 
     const gameStart = () => {
         displayBoard();
-        announcement();
+        announcement(`GAME START! ${control.getCurrentPlayer().playerName} will be the first to place his token`);
     }
 
     const gameRound = () => {
-        console.log(pressTile());
+        switch(pressTile()) {
+            case `winner`:
+                announcement(`GAME OVER! ${control.getCurrentPlayer().playerName} wins!`);
+                break;
+            case `draw`:
+                announcement(`GAME OVER! It's a DRAW.`);
+                break;
+            default:
+                announcement(`${control.getCurrentPlayer().playerName} is Done.`);
+        };
+    }
+
+    const reset = () => {
+        control.reset();
+        displayBoard();
     }
 
     events();
@@ -107,7 +119,7 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
 
         const targetCell = GameBoard.getBoard()[row].find((_, colIndex) => colIndex === col);
 
-        const checkDraw = () => GameBoard.getBoard().every(item => item.every(cell => cell.getValue() !== ``));
+        const checkDraw = () => GameBoard.getBoard().every(item => item.every(cell => cell.getValue() !== ``)) && checkWin() === false;
 
         const checkWin = () => {
             const length = GameBoard.getBoard().length;
@@ -123,22 +135,23 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
             if (!checkWin() && !checkDraw()) {
                 console.log(`${player.playerName} put his token in row ${row} and col ${col}`);
                 switchPlayer();
-                GameBoard.printBoard();
                 console.log(`${getCurrentPlayer().playerName}'s turn`);
             } else if (checkDraw()) {
-                console.log(`GAME OVER! It's DRAW`);
                 return `draw`;
             } else {
-                console.log(`GAME OVER!`);
-                console.log(`${player.playerName} wins!`);
-                return `${player.playerName} wins!`;
+                return `winner`;
             }
         } else {
             console.log(`Please choose another tile`);
         }
     }
 
-    return { playRound, getCurrentPlayer };
+    const reset = () => {
+        GameBoard.getBoard().forEach(row => row.forEach(cell => cell.addValue(``)));
+        currentPlayer = players[0];
+    }
+
+    return { playRound, getCurrentPlayer, reset };
 }
 
 DomDisplay();
