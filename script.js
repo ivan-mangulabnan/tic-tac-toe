@@ -66,18 +66,23 @@ const DomDisplay = () => {
         const targetCell = ticTacToeGrid.querySelector(`button:focus`);
         const row = parseInt(targetCell.getAttribute(`data-row`));
         const col = parseInt(targetCell.getAttribute(`data-col`));
-        control.playRound(row, col);
+        let gameStatus = control.playRound(row, col);
         displayBoard();
+        return gameStatus;
     }
 
     const events = () => {
         startButton.addEventListener(`click`, gameStart);
-        ticTacToeGrid.addEventListener(`click`, pressTile);
+        ticTacToeGrid.addEventListener(`click`, gameRound);
     }
 
     const gameStart = () => {
         displayBoard();
         announcement();
+    }
+
+    const gameRound = () => {
+        console.log(pressTile());
     }
 
     events();
@@ -122,9 +127,11 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
                 console.log(`${getCurrentPlayer().playerName}'s turn`);
             } else if (checkDraw()) {
                 console.log(`GAME OVER! It's DRAW`);
+                return `draw`;
             } else {
                 console.log(`GAME OVER!`);
                 console.log(`${player.playerName} wins!`);
+                return `${player.playerName} wins!`;
             }
         } else {
             console.log(`Please choose another tile`);
