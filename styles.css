@@ -32,7 +32,7 @@ h1 {
 }
 
 .main {
-    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: relative;
 }
 
 .main > button {
@@ -49,4 +49,116 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
+}
+
+.form-container {
+    position: absolute;
+    top: 18%;
+    left: 34%;
+    border: none;
+}
+
+form {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: 3px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 0 5px 3px #ddd;
+    height: 30rem;
+    width: 40rem;
+    padding: 1rem 2rem;
+
+    display: grid;
+    grid-template-rows: repeat(4, auto) 1fr;
+}
+
+.cancel-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cancel-button button {
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    background-color: #444;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel-button button:hover {
+    background-color: #000;
+    box-shadow: 0 5px 5px #888;
+}
+
+.cancel-button button:active {
+    background-color: #444;
+    box-shadow: 0 5px 5px #888;
+}
+
+form p {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+label {
+    font-size: .9rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+input {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: block;
+    font-size: 1.3rem;
+    height: 3rem;
+    width: 30rem;
+    padding: .4rem .7rem;
+    border: none;
+    background-color: #efefef;
+    border-radius: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.pOne,
+.pTwo {
+    padding-top: 1rem;
+    padding-left: .5rem;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1.5rem;
+    padding-right: .5rem;
+}
+
+.submit-button button {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 4rem;
+    width: 12rem;
+    border-radius: 1.3rem;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-button button:hover {
+    box-shadow: 0 5px 5px #888;
+}
+
+.submit-button button:active {
+    box-shadow: 0 5px 5px #888;
+    background-color: #D9DADE;
 }
