@@ -21,28 +21,26 @@
         <button class="start">Start Game</button>
         <div class="grid-generator"></div>
         <div class="announcement"></div>
+        <dialog class="form-container">
+            <form>
+                <div class="cancel-button">
+                    <p>Before the first move… who's playing?</p>
+                    <button type="button">✖</button>
+                </div>
+                <div class="pOne">
+                    <label for="playerOne">ENTER NAME FOR PLAYER 1:</label>
+                    <input type="text" id="playerOne" required>
+                </div>
+                <div class="pTwo">
+                    <label for="playerTwo">ENTER NAME FOR PLAYER 2:</label>
+                    <input type="text" id="playerTwo" required>
+                </div>
+                <div class="submit-button">
+                    <button type="submit">PLAY GAME</button>
+                </div>
+            </form>
+        </dialog>
     </div>
-
-    <dialog class="form-container">
-        <form>
-            <div class="cancel-button">
-                <button type="button">✖</button>
-            </div>
-            <p>Before the first move… who's playing?</p>
-            <div class="pOne">
-                <label for="playerOne">ENTER NAME FOR PLAYER 1:</label>
-                <input type="text" id="playerOne" required>
-            </div>
-            <div class="pTwo">
-                <label for="playerTwo">ENTER NAME FOR PLAYER 2:</label>
-                <input type="text" id="playerTwo" required>
-            </div>
-            <div class="submit-button">
-                <button type="button">PLAY GAME</button>
-            </div>
-        </form>
-    </dialog>
-
     <script src="script.js" defer></script>
 </body>
 </html>
