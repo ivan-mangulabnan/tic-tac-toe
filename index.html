@@ -29,11 +29,11 @@
                 </div>
                 <div class="pOne">
                     <label for="playerOne">ENTER NAME FOR PLAYER 1:</label>
-                    <input type="text" id="playerOne" required>
+                    <input type="text" id="playerOne" required pattern="^(?!\s$).+" minlength="1" maxlength="20">
                 </div>
                 <div class="pTwo">
                     <label for="playerTwo">ENTER NAME FOR PLAYER 2:</label>
-                    <input type="text" id="playerTwo" required>
+                    <input type="text" id="playerTwo" required pattern="^(?!\s$).+" minlength="1" maxlength="20">
                 </div>
                 <div class="submit-button">
                     <button type="submit">PLAY GAME</button>
