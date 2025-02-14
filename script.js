@@ -31,13 +31,20 @@ const GameBoard = (() => {
 
 const DomDisplay = () => {
 
-    const control = GameController();
+    let control = GameController();
 
     const mainDiv = document.querySelector(`.main`);
     const startButton = mainDiv.querySelector(`.start`);
     const resetButton = mainDiv.querySelector(`.reset`);
     const ticTacToeGrid = mainDiv.querySelector(`div:first-of-type`);
     const announcementDiv = mainDiv.querySelector(`.announcement`);
+    const nameInputForm = mainDiv.querySelector(`dialog`);
+
+    const form = nameInputForm.querySelector(`form`);
+    const playerOneName = nameInputForm.querySelector(`#playerOne`);
+    const playerTwoName = nameInputForm.querySelector(`#playerTwo`);
+    const nameSubmitButton = nameInputForm.querySelector(`.submit-button button`);
+    const closeFormButton = nameInputForm.querySelector(`.cancel-button button`);
 
     const displayBoard = () => {
         ticTacToeGrid.innerHTML = "";
@@ -69,14 +76,31 @@ const DomDisplay = () => {
     }
 
     const events = () => {
-        startButton.addEventListener(`click`, gameStart);
+        startButton.addEventListener(`click`, getNames);
         ticTacToeGrid.addEventListener(`click`, gameRound);
         resetButton.addEventListener(`click`, reset);
+
+        // form events below
+        form.addEventListener(`submit`, (event) => {
+            event.preventDefault();
+            const pOne = playerOneName.value;
+            const pTwo = playerTwoName.value;
+            control = GameController(pOne,pTwo);
+            gameStart();
+            nameInputForm.close();
+        })
+
     }
 
     const gameStart = () => {
         displayBoard();
-        announcement(`GAME START! ${control.getCurrentPlayer().playerName} will be the first to place his token`);
+        announcementDiv.innerHTML = "";
+        const welcome = document.createElement(`p`);
+        const welcomeTwo = document.createElement(`p`);
+        welcome.textContent = `WELCOME ${control.getPlayers()[0]} and ${control.getPlayers()[1]}`;
+        welcomeTwo.textContent = `Player 1 will always the first. That's you, ${control.getCurrentPlayerName()}. Pick a Tile.`;
+        announcementDiv.appendChild(welcome);
+        announcementDiv.appendChild(welcomeTwo);
     }
 
     const gameRound = () => {
@@ -97,12 +121,16 @@ const DomDisplay = () => {
         displayBoard();
     }
 
+    const getNames = () => {
+        nameInputForm.showModal();
+    }
+
     events();
 }
 
-function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
+const GameController = (playerOne, playerTwo) => {
 
-    const players = [
+    let players = [
         { playerName: playerOne, token: `X` },
         { playerName: playerTwo, token: `O` }
     ];
@@ -110,6 +138,10 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
     let currentPlayer = players[0];
 
     const getCurrentPlayer = () => currentPlayer;
+
+    const getCurrentPlayerName = () => currentPlayer.playerName;
+
+    const getPlayers = () => players.map(player => player.playerName);
 
     const switchPlayer = () => currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
 
@@ -151,7 +183,7 @@ function GameController(playerOne = `Ivan`, playerTwo = `Jim`) {
         currentPlayer = players[0];
     }
 
-    return { playRound, getCurrentPlayer, reset };
+    return { playRound, getCurrentPlayer, reset, getPlayers, getCurrentPlayerName };
 }
 
 DomDisplay();
